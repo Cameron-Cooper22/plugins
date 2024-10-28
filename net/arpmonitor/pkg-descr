@@ -1,0 +1,2 @@
+Plugin meant to integrate arpwatch and nmap functionality. This may be swapped
+to addrwatch as it is a more modern variant.
