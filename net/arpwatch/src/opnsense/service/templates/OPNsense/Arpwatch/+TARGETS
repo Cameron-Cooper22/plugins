@@ -1,0 +1,2 @@
+arpwatch:/etc/rc.conf.d/arpwatch
+arpwatch.conf:/usr/local/etc/arpwatch.conf
