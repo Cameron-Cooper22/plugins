@@ -1,0 +1,8 @@
+<model>
+  <mount>//OPNsense/arpwatch</mount>
+  <description>
+    The OPNsense arpwatch plugin
+  </description>
+  <items>
+  </items>
+</model>

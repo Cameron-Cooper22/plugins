@@ -1,4 +1,0 @@
-arpwatch is a program that monitors the MAC-IP associations
-for a given subnet. This plugins intention is to further
-improve network traffick monitoring, and to potentially
-provide a helpful tool for a future nmap plugin as well.

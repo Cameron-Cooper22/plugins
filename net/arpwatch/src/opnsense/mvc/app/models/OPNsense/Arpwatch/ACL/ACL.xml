@@ -1,9 +1,0 @@
-<acl>
-   <page-services-vnstat>
-      <name>Services: Arpwatch</name>
-      <patterns>
-         <pattern>ui/arpwatch/*</pattern>
-         <pattern>api/arpwatch/*</pattern>
-      </patterns>
-   </page-services-vnstat>
-</acl>
