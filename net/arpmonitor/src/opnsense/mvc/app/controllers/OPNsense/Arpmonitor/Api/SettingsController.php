@@ -2,9 +2,9 @@
 
 namespace OPNsense\Arpmonitor\Api;
 
-use OPNsense\Base\ApiMutableModelControllerBase;
+use OPNsense\Base\ApiControllerBase;
 
-class SettingsController extends ApiMutableModelControllerBase
+class SettingsController extends ApiControllerBase
 {
     protected static $internalModelClass = '\OPNsense\Arpmonitor\Arpmonitor';
     protected static $internalModelName = 'arpmonitor';
