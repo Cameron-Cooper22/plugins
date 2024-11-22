@@ -43,7 +43,7 @@ POSSIBILITY OF SUCH DAMAGE.
         });
 
         // use a SimpleActionButton() to call /api/arpmonitor/service/test
-        $("#testAct").SimpleActionButton({
+        $("#testingAct").SimpleActionButton({
             onAction: function(data) {
                 $("#responseMsg").removeClass("hidden").html(data['message']);
             }
@@ -61,5 +61,5 @@ POSSIBILITY OF SUCH DAMAGE.
 
 <div class="col-md-12">
     <button class="btn btn-primary" id="saveAct" type="button"><b>{{ lang._('Save') }}</b></button>
-    <button class="btn btn-primary" id="testAct" data-endpoint="/api/arpmonitor/service/test" data-label="{{ lang._('Test') }}"></button>
+    <button class="btn btn-primary" id="testAct" data-endpoint="/api/arpmonitor/service/testing" data-label="{{ lang._('Testing') }}"></button>
 </div>

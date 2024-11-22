@@ -62,6 +62,5 @@ match args.cmd:
         result['message'] = "This is a test of the functionality of some bs"
         print(json.dumps(result))
 
-s.close()
 
 
