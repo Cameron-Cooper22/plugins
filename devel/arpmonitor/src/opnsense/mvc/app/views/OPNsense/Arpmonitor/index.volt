@@ -68,5 +68,5 @@ POSSIBILITY OF SUCH DAMAGE.
 <div class="col-md-12">
     <button class="btn btn-primary" id="saveAct" type="button"><b>{{ lang._('Save') }}</b></button>
     <button class="btn btn-primary" id="testAct" data-endpoint="/api/arpmonitor/service/testthisshit" data-label="{{ lang._('Test') }}"></button>
-    <button class="btn btn-primary" id="startAct" data-endpoint="/api/arpmonitor/daemon/start" data-label="{{'Start Daemon}}"></button>
+    <button class="btn btn-primary" id="startAct" data-endpoint="/api/arpmonitor/daemon/start" data-label="{{'Start Daemon'}}"></button>
 </div>
