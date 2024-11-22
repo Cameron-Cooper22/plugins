@@ -27,6 +27,7 @@
 
     --------------------------------------------------------------------------------------
 
+    perform some tests for the helloworld application
 """
 import os
 import socket
@@ -37,12 +38,12 @@ from configparser import ConfigParser
 # set default timeout to 2 seconds
 socket.setdefaulttimeout(2)
 
-arpmonitor_conf = '/usr/local/etc/arpmonitor/arpmonitor.conf'
+hello_world_config = '/usr/local/etc/helloworld/helloworld.conf'
 
 result = {}
-if os.path.exists(arpmonitor_conf):
+if os.path.exists(hello_world_config):
     cnf = ConfigParser()
-    cnf.read(arpmonitor_conf)
+    cnf.read(hello_world_config)
     if cnf.has_section('general'):
         try:
             smtpObj = smtplib.SMTP(cnf.get('general', 'SMTPHost'))
@@ -73,3 +74,4 @@ else:
 
 
 print (json.dumps(result))
+
