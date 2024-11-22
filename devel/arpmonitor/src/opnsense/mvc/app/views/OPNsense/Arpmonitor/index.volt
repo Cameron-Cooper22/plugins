@@ -61,5 +61,5 @@ POSSIBILITY OF SUCH DAMAGE.
 
 <div class="col-md-12">
     <button class="btn btn-primary" id="saveAct" type="button"><b>{{ lang._('Save') }}</b></button>
-    <button class="btn btn-primary" id="testingAct" data-endpoint="/api/arpmonitor/service/testing"><b>Testing</b></button>
+    <button class="btn btn-primary" id="testingAct" data-endpoint="/api/arpmonitor/service/test"><b>Test</b></button>
 </div>
