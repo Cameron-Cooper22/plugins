@@ -25,4 +25,15 @@ class ServiceController extends ApiMutableModelControllerBase
     }
     return ["message" => "unable to run config action"];
   }
+  public function startAction()
+  {
+    if ($this -> request -> isPost()) {
+      // basically is just pulling result from the printed json.dumps()
+      $bckresult = json_decode(trim((new Backend()) -> configdRun("arpwatch start_daemon")), true);
+      if ($bckresult !== null) {
+	return $bckresult;
+      }
+    }
+    return ["message" => "unable to start the daemon. fml"];
+  }
 }

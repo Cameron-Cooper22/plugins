@@ -16,6 +16,11 @@
 	$("#responseMsg").html(data['message']);
       }
     });
+    $("#startAct").SimpleActionButton({
+      onAction: function(data) {
+	$("#responseMsg").html(data['message']);
+      }
+    });
   });
 </script>
 
@@ -24,6 +29,6 @@
 </div>
 
 <div class="alert alert-info hidden" role="alert" id="responseMsg">
-
+    <button class="btn btn-primary" id="testAct" data-endpoint="/api/arpwatch/service/test" data-label="{{ lang._('Test') }}"></button>
+    <button class="btn btn-primary" id="startAct" data-endpoint="/api/arpwatch/service/start_daemon" data-label="{{ lang._('Start Daemon') }}"></button>
 </div>
-<button class="btn btn-primary" id="testAct" data-endpoint="/api/helloworld/service/test" data-label="{{ lang._('Test') }}"></button>

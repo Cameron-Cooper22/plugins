@@ -343,5 +343,7 @@ if not is_daemon():
 else:
     pass   
 
+result = {}
+result['message'] = "Daemon started"
 
 

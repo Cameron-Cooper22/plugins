@@ -58,7 +58,8 @@ match args.cmd:
         print(s.recv(512).decode())
 
     case "test":
-        print("This is a test of the functionality of whatever bull is happening")
-
+        result = {}
+        result['message'] = "This is a test of the functionality of some bs"
+        print(json.dumps(result))
 
 s.close()
