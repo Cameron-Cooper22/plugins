@@ -203,11 +203,11 @@ class ArpwatchController:
             if current_conf.cnf.has_section('general'):
                 # GENERAL NICS
 
-                nics = current_conf.cnf.get('general', 'nics')
+                nics = current_conf.cnf.get('general', 'Nics')
                 nics = nics.split(' ')
 
                 # GENERAL EMAILS
-                email_addr = current_conf.cnf.get('general', 'email')
+                email_addr = current_conf.cnf.get('general', 'Email')
                 if email_addr == "":
                     email_addr = "root"
 
