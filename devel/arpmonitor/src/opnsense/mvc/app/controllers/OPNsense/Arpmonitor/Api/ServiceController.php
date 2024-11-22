@@ -46,15 +46,10 @@ class ServiceController extends ApiControllerBase
 
     public function testAction()
     {
-        if ($this->request->isPost()) {
-            $bckresult = json_decode(trim((new Backend())->configdRun("arpmonitor test")), true);
-            if ($bckresult !== null) {
-                // only return valid json type responses
-                return $bckresult;
-	    }
-
-	    return ["message" => "is this right"];
-        }
-        return ["message" => "unable to run config action"];
+        $bckresult = json_decode(trim((new Backend())->configdRun("arpmonitor test")), true);
+        if ($bckresult !== null) {
+            // only return valid json type responses
+            return $bckresult;
+	}
     }
 }
