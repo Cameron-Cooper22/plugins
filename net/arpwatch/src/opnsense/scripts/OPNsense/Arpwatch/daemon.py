@@ -1,3 +1,4 @@
+#!/usr/local/bin/python3
 from io import TextIOWrapper
 import os
 import json

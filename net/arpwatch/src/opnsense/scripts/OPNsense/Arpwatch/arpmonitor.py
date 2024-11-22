@@ -1,4 +1,4 @@
-#!/Users/558632/package-builds/homebrew/bin/python3
+#!/usr/local/bin/python3
 
 import os
 import socket
