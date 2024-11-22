@@ -48,6 +48,12 @@ POSSIBILITY OF SUCH DAMAGE.
                 $("#responseMsg").removeClass("hidden").html(data['message']);
             }
         });
+	
+	$("#startAct").SimpleActionButton({
+	    onAction: function(data) {
+		$("#responseMsg").removeClass("hidden").html(data['message']);
+	    }
+	});
     });
 </script>
 
@@ -61,5 +67,6 @@ POSSIBILITY OF SUCH DAMAGE.
 
 <div class="col-md-12">
     <button class="btn btn-primary" id="saveAct" type="button"><b>{{ lang._('Save') }}</b></button>
-    <button class="btn btn-primary" id="testAct" data-endpoint="/api/helloworld/service/testthisshit" data-label="{{ lang._('Test') }}"></button>
+    <button class="btn btn-primary" id="testAct" data-endpoint="/api/arpmonitor/service/testthisshit" data-label="{{ lang._('Test') }}"></button>
+    <button class="btn btn-primary" id="startAct" data-endpoint="/api/arpmonitor/daemon/start" data-label="{{'Start Daemon}}"></button>
 </div>
