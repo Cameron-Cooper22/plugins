@@ -1,9 +1,9 @@
 <?php
 namespace OPNsense\Arpmonitor\Api;
 
-use \OPNsense\Base\ApiMutableModelControllerBase;
+use \OPNsense\Base\ApiControllerBase;
 use \OPNsense\Core\Backend;
-class ServiceController extends ApiMutableModelControllerBase
+class ServiceController extends ApiControllerBase
 {
   public function reloadAction()
   {

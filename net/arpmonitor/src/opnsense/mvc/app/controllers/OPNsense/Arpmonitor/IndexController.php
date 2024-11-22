@@ -2,7 +2,7 @@
 
 namespace OPNsense\Arpmonitor;
 
-class GeneralController extends \OPNsense\Base\IndexController
+class IndexController extends \OPNsense\Base\IndexController
 {
     public function indexAction(): void
     {
