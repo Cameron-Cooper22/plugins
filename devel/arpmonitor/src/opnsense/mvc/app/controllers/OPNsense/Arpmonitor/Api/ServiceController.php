@@ -51,7 +51,9 @@ class ServiceController extends ApiControllerBase
             if ($bckresult !== null) {
                 // only return valid json type responses
                 return $bckresult;
-            }
+	    }
+
+	    return ["message" => "is this right"];
         }
         return ["message" => "unable to run config action"];
     }
