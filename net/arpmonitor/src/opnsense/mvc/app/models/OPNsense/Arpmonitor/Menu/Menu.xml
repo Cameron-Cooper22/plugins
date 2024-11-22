@@ -1,5 +1,7 @@
 <menu>
-  <Lobby>
-    <Arpmonitor VisibleName="Arpwatch" url="/ui/arpwatch/"/>
-  </Lobby>
+  <Services>
+    <Arpmonitor cssClass="fa fa-rocket">
+      <General url="/ui/arpmonitor/general/index"/>
+    </Arpmonitor>
+  </Services>
 </menu>

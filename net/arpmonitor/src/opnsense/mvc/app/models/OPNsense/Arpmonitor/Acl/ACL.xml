@@ -1,9 +1,9 @@
 <acl>
-    <page-user-arpwatch>
+    <page-services-arpmonitor>
         <name>Lobby: Arpmonitor</name>
         <patterns>
             <pattern>ui/arpmonitor/*</pattern>
             <pattern>api/arpmonitor/*</pattern>
         </patterns>
-    </page-user-arpwatch>
+    </page-services-arpmonitor>
 </acl>

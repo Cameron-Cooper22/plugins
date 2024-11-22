@@ -1,12 +1,12 @@
 <script type="text/javascript">
     $( document ).ready(function() {
-        mapDataToFormUI({'frm_GeneralSettings':"/api/arpmonitor/settings/get"}).done(function(data){
+        mapDataToFormUI({'frm_GeneralSettings':"/api/arpmonitor/general/get"}).done(function(data){
             // place actions to run after load, for example update form styles.
         });
 
         // link save button to API set action
         $("#saveAct").click(function(){
-            saveFormToEndpoint("/api/arpmonitor/settings/set",'frm_GeneralSettings',function(){
+            saveFormToEndpoint("/api/arpmonitor/general/set",'frm_GeneralSettings',function(){
                 // action to run after successful save, for example reconfigure service.
                 ajaxCall(url="/api/arpmonitor/service/reload", sendData={},callback=function(data,status) {
                     // action to run after reload
