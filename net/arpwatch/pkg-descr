@@ -1,4 +1,0 @@
-Plugin allowing for easy usage and configuration of the arpwatch
-daemon. In the future, this may also include the possibility of
-running nmap against each ip address when a flip flop, changed
-ethernet address, or new station occurs.
