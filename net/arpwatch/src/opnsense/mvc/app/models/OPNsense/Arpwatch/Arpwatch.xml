@@ -9,7 +9,7 @@
 	<default>1</default>
 	<Required>Y</Required>
       </enabled>
-      <nics type="StringField">
+      <nics type="TextField">
 	<default></default>
 	<Required>N</Required>
 	<Multiple>Y</Multiple>
