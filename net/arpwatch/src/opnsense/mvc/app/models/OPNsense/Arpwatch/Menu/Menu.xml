@@ -1,5 +1,5 @@
 <menu>
-  <User order="999">
+  <Lobby>
     <Arpwatch VisibleName="Arpwatch" url="/ui/arpwatch/"/>
-  </User>
+  </Lobby>
 </menu>
