@@ -1,0 +1,9 @@
+<acl>
+    <page-user-arpmonitor>
+        <name>Lobby: Arpmonitor</name>
+        <patterns>
+            <pattern>ui/arpmonitor/*</pattern>
+            <pattern>api/arpmonitor/*</pattern>
+        </patterns>
+    </page-user-arpmonitor>
+</acl>

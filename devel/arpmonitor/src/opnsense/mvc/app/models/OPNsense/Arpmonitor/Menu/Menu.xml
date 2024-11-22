@@ -1,0 +1,5 @@
+<menu>
+    <Lobby>
+        <Arpmonitor VisibleName="Arpmonitor" cssClass="fa fa-comment-o fa-fw" url="/ui/arpmonitor"/>
+    </Lobby>
+</menu>
