@@ -1,0 +1,19 @@
+<form>
+  <field>
+    <id>arpmonitor.general.Enabled</id>
+    <label>enabled</label>
+    <type>checkbox</type>
+    <help>enable this feature</help>
+  </field>
+  <field>
+    <id>arpmonitor.general.Nics</id>
+    <label>Network Interfaces</label>
+    <type>text</type>
+    <help><![CDATA[Network interfaces OPNsense is attached to]]></help>
+  </field>
+  <field>
+    <id>arpmonitor.general.Email</id>
+    <label>Email (to)</label>
+    <type>text</type>
+  </field>
+</form>

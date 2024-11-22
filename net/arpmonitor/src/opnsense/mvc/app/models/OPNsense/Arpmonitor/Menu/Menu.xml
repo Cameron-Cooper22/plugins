@@ -1,0 +1,7 @@
+<menu>
+  <Services>
+    <Arpmonitor cssClass="fa fa-rocket">
+      <General url="/ui/arpmonitor/general/index"/>
+    </Arpmonitor>
+  </Services>
+</menu>
