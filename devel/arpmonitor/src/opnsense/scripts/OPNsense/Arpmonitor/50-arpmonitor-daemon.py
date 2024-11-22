@@ -187,16 +187,7 @@ class ArpwatchController:
         pass
 
     def kill(self) -> bool:
-        # for proc in psutil.process_iter(['name']):
-        #     try:
-        #         if proc.info['name'] == "arpwatch":
-        #             os.kill(proc.pid, signal.SIGTERM)
-        #             return True
-        #
-        #     except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-        #         pass
-        #
-        # return False
+        os.system("killall arpmonitor-daemon")
         return True
     def restart(self) -> bool:
         if self.kill():
@@ -338,13 +329,12 @@ def main():
 
             i += 1
 
+        time.sleep(5.0)
 if not is_daemon():
-    daemon = daemonize.Daemonize(app="arpwatch-plugin", pid=pid_loc, action=main)
+    daemon = daemonize.Daemonize(app="arpmonitor-daemon", pid=pid_loc, action=main)
     daemon.start()
 else:
     pass   
 
-result = {}
-result['message'] = "Daemon started"
 
 
