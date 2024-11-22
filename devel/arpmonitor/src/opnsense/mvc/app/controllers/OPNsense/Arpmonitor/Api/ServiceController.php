@@ -44,7 +44,7 @@ class ServiceController extends ApiControllerBase
         return ["status" => $status];
     }
 
-    public function testAction()
+    public function testthisshitAction()
     {
 	if ($this->request->isPost()) {
 	    $bckresult = json_decode(trim((new Backend())->configdRun("arpmonitor test")), true);
