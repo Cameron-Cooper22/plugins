@@ -13,9 +13,24 @@
                 });
             });
         });
+	$("#testAct").SimpleActionButton({
+	    onAction: function(data) {
+		$("#responseMsg").removeClass("hidden").html(data['message']);
+	    }
+	});
     });
 </script>
 
+
+<div class="alert alert-info hidden" role="alert" id="responseMsg">
+
+</div>
+
+<div  class="col-md-12">
+    {{ partial("layout_partials/base_form",['fields':generalForm,'id':'frm_GeneralSettings'])}}
+</div>
+
 <div class="col-md-12">
     <button class="btn btn-primary"  id="saveAct" type="button"><b>{{ lang._('Save') }}</b></button>
+    <button class="btn btn-primary" id="testAct" data-endpoint="/api/arpwatch/service/test" data-label="{{ lang._('Test') }}"></button>
 </div>
