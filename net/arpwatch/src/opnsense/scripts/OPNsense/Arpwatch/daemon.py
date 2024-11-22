@@ -8,7 +8,7 @@ import time
 import daemonize
 import signal
 from operator import attrgetter
-import psutil
+# import psutil
 
 # TODO: move list[msg] to full json string and see how well it sends through ports
 #       see if json.dumps() is effectively the same but if it isnt then it should go
@@ -187,17 +187,17 @@ class ArpwatchController:
         pass
 
     def kill(self) -> bool:
-        for proc in psutil.process_iter(['name']):
-            try:
-                if proc.info['name'] == "arpwatch":
-                    os.kill(proc.pid, signal.SIGTERM)
-                    return True
-
-            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-                pass
-
-        return False
-
+        # for proc in psutil.process_iter(['name']):
+        #     try:
+        #         if proc.info['name'] == "arpwatch":
+        #             os.kill(proc.pid, signal.SIGTERM)
+        #             return True
+        #
+        #     except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+        #         pass
+        #
+        # return False
+        return True
     def restart(self) -> bool:
         if self.kill():
             if current_conf.cnf.has_section('general'):
