@@ -4,5 +4,19 @@
     The OPNsense arpwatch plugin
   </description>
   <items>
+    <general>
+      <enabled type="BooleanField">
+	<default>1</default>
+	<Required>Y</Required>
+      </enabled>
+      <nics type="StringField">
+	<default></default>
+	<Required>N</Required>
+	<Multiple>Y</Multiple>
+      </nics>
+      <email type="EmailField">
+	<Required>Y</Required>
+      </email>
+    </general>
   </items>
 </model>

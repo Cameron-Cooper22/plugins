@@ -1,0 +1,5 @@
+<menu>
+  <User order="999">
+    <Arpwatch VisibleName="Arpwatch" url="/ui/arpwatch/"/>
+  </User>
+</menu>

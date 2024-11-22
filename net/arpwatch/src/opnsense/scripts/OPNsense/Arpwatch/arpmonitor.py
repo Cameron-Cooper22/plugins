@@ -57,5 +57,8 @@ match args.cmd:
         s.send(Cmd.KILL_ARPWATCH.encode())
         print(s.recv(512).decode())
 
+    case "test":
+        print("This is a test of the functionality of whatever bull is happening")
+
 
 s.close()
