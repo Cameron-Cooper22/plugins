@@ -58,10 +58,12 @@ match args.cmd:
 
     case "get_log":
         st: str = ""
-        with open("/var/log/arpwatch/arpwatch.log") as file:
+        # HACK: this will have to change, log file isn't rotated so in prod this may
+        # point to the actual syslog
+        with open("/var/log/arpwatch.log") as file:
             for line in file:
-                st = st + line
-
+                if "arpwatch" in line:
+                    st = st + line
         print(st)
 
     case "get_dat":
