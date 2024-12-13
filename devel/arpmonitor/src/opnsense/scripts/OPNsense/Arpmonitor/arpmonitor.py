@@ -9,6 +9,7 @@ import argparse
 import socket
 from enum import Enum
 import re
+import psutil
 
 
 
@@ -37,34 +38,51 @@ PORT = 3529
 
 s.connect(('127.0.0.1', PORT))
 
+conf_loc = "/usr/etc/arpmonitor/arpmonitor.conf"
+
+cnf = ConfigParser()
+cnf.read(conf_loc)
+
 match args.cmd:
     case "reload_conf":
-        s.send(Cmd.RELOAD_CONF.encode())
-        print(json.dumps(s.recv(512).decode()))
+        PROCNAME = "arpwatch"
+
+        for proc in psutil.process_iter():
+            if proc.name() == PROCNAME:
+                proc.kill()
+        
+        email = "root@localhost"
+        if cnf.has_section('general'):
+            if cnf.has_option('general', 'email'):
+                email = cnf.get('general', 'email')
+            os.system("arpwatch -e {email}")
 
     case "get_log":
+        st: str = ""
         with open("/var/log/arpwatch/arpwatch.log") as file:
-            st: str = ""
             for line in file:
                 st = st + line
 
-            print(s)
+        print(s)
 
     case "get_dat":
+        st: str = ""
         with open("/usr/local/arpwatch/arp.dat") as file:
-            st: str = ""
             for line in file:
                 st = st + line
             
-            print(st)
+        print(st)
 
     case "get_arpwatch_status":
-        s.send(Cmd.GET_ARPWATCH_STATUS.encode())
-        print(json.dumps(s.recv(1024).decode()))
+        print(("arpwatch" in (i.name() for i in psutil.process_iter())))
+
 
     case "kill_arpwatch":
-        s.send(Cmd.KILL_ARPWATCH.encode())
-        print(json.dumps(s.recv(512).decode()))
+        PROCNAME = "arpwatch"
+
+        for proc in psutil.process_iter():
+            if proc.name() == PROCNAME:
+                proc.kill()
 
 
     case "test":
