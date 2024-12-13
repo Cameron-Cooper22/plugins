@@ -28,7 +28,7 @@ POSSIBILITY OF SUCH DAMAGE.
 <!-- Navigation bar -->
 <ul class="nav nav-tabs" data-tabs="tabs" id="maintabs">
     <li class="active"><a data-toggle="tab" href="#general">{{ lang._('General') }}</a></li>
-    <li><a data-toggle="" href="#arplog">{{ lang._('Arpwatch Log') }}</a></li>
+    <li><a data-toggle="tab" href="#arplog">{{ lang._('Arpwatch Log') }}</a></li>
     <li><a data-toggle="tab" href="#arpdat">{{ lang._('arp.dat') }}</a></li>
 </ul>
 <div class="tab-content content-box tab-content">
@@ -46,12 +46,6 @@ POSSIBILITY OF SUCH DAMAGE.
     </div>
     <div id="arpdat" class="tab-pane fade in">
       <pre id="listarpdat"></pre>
-    </div>
-    <div id="monthly" class="tab-pane fade in">
-      <pre id="listmonthly"></pre>
-    </div>
-    <div id="yearly" class="tab-pane fade in">
-      <pre id="listyearly"></pre>
     </div>
 </div>
 <script>
