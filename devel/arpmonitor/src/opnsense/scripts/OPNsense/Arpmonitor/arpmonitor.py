@@ -42,13 +42,21 @@ match args.cmd:
         s.send(Cmd.RELOAD_CONF.encode())
         print(json.dumps(s.recv(512).decode()))
 
-    case "get_arpwatch_log":
-        s.send(Cmd.GET_ARPWATCH_LOG.encode())
-        print(json.dumps(s.recv(250000).decode())) # 8 kilobyte buffer
+    case "get_log":
+        with open("/var/log/arpwatch/arpwatch.log") as file:
+            st: str = ""
+            for line in file:
+                st = st + line
 
-    case "get_arpwatch_dat":
-        s.send(Cmd.GET_ARPWATCH_DAT.encode())
-        print(json.dumps(s.recv(250000).decode()))
+            print(s)
+
+    case "get_dat":
+        with open("/usr/local/arpwatch/arp.dat") as file:
+            st: str = ""
+            for line in file:
+                st = st + line
+            
+            print(st)
 
     case "get_arpwatch_status":
         s.send(Cmd.GET_ARPWATCH_STATUS.encode())
