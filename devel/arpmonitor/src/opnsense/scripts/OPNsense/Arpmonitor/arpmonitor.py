@@ -9,7 +9,7 @@ import argparse
 import socket
 from enum import Enum
 import re
-import psutil
+import signal
 
 
 
@@ -46,11 +46,14 @@ cnf.read(conf_loc)
 match args.cmd:
     case "reload_conf":
         PROCNAME = "arpwatch"
+        pid = os.system("ps aux | awk '/arpwatch/{print $2}'")
+        try:
+            os.kill(pid, signal.SIGTERM)
+        except ProcessLookupError:
+            print(f"Process with PID {pid} not found.")
+        except PermissionError:
+            print(f"Insufficient permissions to kill process with PID {pid}.")
 
-        for proc in psutil.process_iter():
-            if proc.name() == PROCNAME:
-                proc.kill()
-        
         email = "root@localhost"
         if cnf.has_section('general'):
             if cnf.has_option('general', 'email'):
@@ -74,15 +77,19 @@ match args.cmd:
         print(st)
 
     case "get_arpwatch_status":
-        print(("arpwatch" in (i.name() for i in psutil.process_iter())))
-
+        PROCNAME = "arpwatch"
+        pid = os.system("ps aux | awk '/arpwatch/{print $2}'")
 
     case "kill_arpwatch":
         PROCNAME = "arpwatch"
 
-        for proc in psutil.process_iter():
-            if proc.name() == PROCNAME:
-                proc.kill()
+        pid = os.system("ps aux | awk '/name/{print $2}'")
+        try:
+            os.kill(pid, signal.SIGTERM)
+        except ProcessLookupError:
+            print(f"Process with PID {pid} not found.")
+        except PermissionError:
+            print(f"Insufficient permissions.")
 
 
     case "test":
