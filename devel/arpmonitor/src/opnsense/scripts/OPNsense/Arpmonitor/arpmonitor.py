@@ -33,10 +33,6 @@ class Cmd:
     KILL_ARPWATCH = "KILL_ARPWATCH"
     GET_STATISTICS = "GET_STATISTICS"
 
-s = socket.socket()
-PORT = 3529
-
-s.connect(('127.0.0.1', PORT))
 
 conf_loc = "/usr/etc/arpmonitor/arpmonitor.conf"
 
@@ -66,7 +62,7 @@ match args.cmd:
             for line in file:
                 st = st + line
 
-        print(s)
+        print(st)
 
     case "get_dat":
         st: str = ""
