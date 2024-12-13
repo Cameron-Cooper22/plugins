@@ -42,7 +42,7 @@ cnf.read(conf_loc)
 match args.cmd:
     case "reload_conf":
         PROCNAME = "arpwatch"
-        pid = os.system("ps aux | awk '/arpwatch/{print $2}'")
+        pid = os.system("pgrep -lS arpwatch | awk '{print $1}'")
         try:
             os.kill(pid, signal.SIGTERM)
         except ProcessLookupError:
@@ -59,8 +59,8 @@ match args.cmd:
     case "get_log":
         st: str = ""
         # HACK: this will have to change, log file isn't rotated so in prod this may
-        # point to the actual syslog
-        with open("/var/log/arpwatch.log") as file:
+        # point to the actual syslog. ALSO WTH apparently it decided to not use it anymore
+        with open("/var/log/system/system_20241122.log") as file:
             for line in file:
                 if "arpwatch" in line:
                     st = st + line
@@ -76,12 +76,12 @@ match args.cmd:
 
     case "get_arpwatch_status":
         PROCNAME = "arpwatch"
-        pid = os.system("ps aux | awk '/arpwatch/{print $2}'")
+        pid = os.system("pgrep -lS arpwatch | awk '{print $1}'")
 
     case "kill_arpwatch":
         PROCNAME = "arpwatch"
 
-        pid = os.system("ps aux | awk '/name/{print $2}'")
+        pid = os.system("pgrep -lS arpwatch | awk '{print $1}'")
         try:
             os.kill(pid, signal.SIGTERM)
         except ProcessLookupError:
@@ -97,4 +97,3 @@ match args.cmd:
 
 
 
-print("fuck off")
