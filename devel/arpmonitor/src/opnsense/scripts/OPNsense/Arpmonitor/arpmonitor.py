@@ -60,7 +60,7 @@ match args.cmd:
         st: str = ""
         # HACK: this will have to change, log file isn't rotated so in prod this may
         # point to the actual syslog. ALSO WTH apparently it decided to not use it anymore
-        with open("/var/log/system/system_20241122.log") as file:
+        with open("/var/log/arpwatch.log") as file:
             for line in file:
                 if "arpwatch" in line:
                     st = st + line
