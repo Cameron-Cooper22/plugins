@@ -50,9 +50,14 @@ POSSIBILITY OF SUCH DAMAGE.
 </div>
 <script>
 
-function update_arpdat() {
-  ajaxCall(url="/api/arpmonitor/daemon/arplog", sendData={}, callback=function(data,status) {
+function update_arplog() {
+    ajaxCall(url="/api/arpmonitor/daemon/arplog", sendData={}, callback=function(data,status) {
         $("#listarplog").text(data['response']);
+    });
+}
+function update_arpdat() {
+    ajaxCall(url="/api/arpmonitor/daemon/arpdat", sendData={}, callback=function(data,status) {
+        $("#listarpdat").text(data['response']);
     });
 }
     $( document ).ready(function() {
@@ -69,8 +74,10 @@ function update_arpdat() {
                 });
             });
         });
+	setInterval(update_arpdat, 3000);
+	setInterval(update_arplog, 3000);
 
-	$("#logAct").click(function(){
+	$("#arplogAct").click(function(){
 	  ajaxGet('/api/arpmonitor/daemon/log', sendData={}, callback=function(data,status) {
 	    // action to run after pulling log file
 	  });
