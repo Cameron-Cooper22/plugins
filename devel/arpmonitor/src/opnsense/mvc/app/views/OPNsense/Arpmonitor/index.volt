@@ -38,15 +38,14 @@ POSSIBILITY OF SUCH DAMAGE.
             <div class="col-md-12">
                 <hr />
                 <button class="btn btn-primary" id="saveAct" type="button"><b>{{ lang._('Save') }}</b> <i id="saveAct_progress"></i></button>
-                <button class="btn pull-right" id="resetdbAct" type="button"><b>{{ lang._('Reset') }}</b> <i id="resetdbAct_progress" class=""></i></button>
             </div>
         </div>
     </div>
     <div id="arplog" class="tab-pane fade in">
       <pre id="listarplog"></pre>
     </div>
-    <div id="daily" class="tab-pane fade in">
-      <pre id="listdaily"></pre>
+    <div id="arpdat" class="tab-pane fade in">
+      <pre id="listarpdat"></pre>
     </div>
     <div id="monthly" class="tab-pane fade in">
       <pre id="listmonthly"></pre>

@@ -19,7 +19,12 @@ class DaemonController extends ApiControllerBase
   public function arplogAction()
   {
     $backend = new Backend();
-    $response = $backend -> configdRun('arpmonitor arplog');
+    $response = $backend -> configdRun('arpmonitor get_log');
+    return array("response" => $response)
+  }
+  public function arpdatAction() {
+    $backend = new Backend();
+    $response = $backend -> configdRun('arpmonitor get_dat');
     return array("response" => $response)
   }
 }
