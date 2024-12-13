@@ -1,0 +1,31 @@
+<model>
+    <mount>//OPNsense/ArpMonitor</mount>
+    <description>
+        Arpwatch arp.dat presaved addrs
+    </description>
+    <items>
+        <addresses>
+            <address type="ArrayField">
+                <enabled type="MacAddressField">
+                    <Required>Y</Required>
+		    <FieldSeparator>:</FieldSeparator>
+		    <ValidationMessage>
+		      Invalid Mac Address, format 11:22:33:44:55:66
+		    </ValidationMessage>
+                </enabled>
+		<ipaddr type="NetworkField">
+		    <Required>Y</Required>
+		    <FieldSeparator>.</FieldSeparator>
+		    <AddressFamily>ipv4</AddressFamily>
+		    <ValidationMessage>
+		      Invalid ipv4 address, format 192.0.0.1
+		    </ValidationMessage>
+		</ipaddr>
+		<hostname type="TextField">
+		    <Required>N</Required>
+		</hostname>
+            </address>
+        </addresses>
+    </items>
+</model>
+

@@ -44,11 +44,11 @@ match args.cmd:
 
     case "get_arpwatch_log":
         s.send(Cmd.GET_ARPWATCH_LOG.encode())
-        print(json.dumps(s.recv(8192).decode())) # 8 kilobyte buffer
+        print(json.dumps(s.recv(250000).decode())) # 8 kilobyte buffer
 
     case "get_arpwatch_dat":
         s.send(Cmd.GET_ARPWATCH_DAT.encode())
-        print(json.dumps(s.recv(2048).decode()))
+        print(json.dumps(s.recv(250000).decode()))
 
     case "get_arpwatch_status":
         s.send(Cmd.GET_ARPWATCH_STATUS.encode())
@@ -58,9 +58,6 @@ match args.cmd:
         s.send(Cmd.KILL_ARPWATCH.encode())
         print(json.dumps(s.recv(512).decode()))
 
-    case "get_statistics":
-        s.send(Cmd.GET_STATISTICS.encode())
-        print(json.dumps(s.recv(1024).decode()))
 
     case "test":
         result = {}

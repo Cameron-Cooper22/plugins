@@ -5,6 +5,7 @@ import json
 import socket
 from configparser import ConfigParser
 import time
+import re
 import daemonize
 import signal
 from operator import attrgetter
@@ -17,32 +18,12 @@ from operator import attrgetter
 
 arpwatch_config = "/usr/local/etc/arpwatch/arpwatch.conf"
 arpwatch_log = "/var/log/arpwatch.log"
-
+arp_dat = "/usr/local/arpwatch/arp.dat"
 result = {}
 
 pid_loc = "/tmp/arpwatch-plugin.pid"
 
-# parser = argparse.ArgumentParser()
-# parser.add_argument('reload_conf')
-#
-# args = parser.parse_args()
-#
-
-
 import os
-
-def read_last_n_lines(file_name, n):
-    with open(file_name, "rb") as f:
-        try:
-            f.seek(-2, os.SEEK_END) 
-            while n > 0:
-                f.seek(-2, os.SEEK_CUR) 
-                if f.read(1) == b"\n":
-                    n -= 1
-        except OSError:
-            f.seek(0) 
-        return f.readlines()[-n:]
-
 
 
 '''
@@ -71,93 +52,14 @@ class Cmd:
     GET_ARPWATCH_DAT = "GET_ARPWATCH_DAT"
     GET_ARPWATCH_STATUS = "GET_ARPWATCH_STATUS" #basically obtaining arpwatches config
     KILL_ARPWATCH = "KILL_ARPWATCH"
+    GET_STATISTICS = "GET_STATISTICS"
+    SAVE_ADDRS = "SAVE_ADDRS"
 
 class ReloadConf():
     def run(self) -> ConfFile:
         return ConfFile()
 
-class LogMsg:
-    def __init__(self) -> None:
-        self.type = ""
-        
-def LogMsgDict(obj: LogMsg):
-    return obj.__dict__
 
-# Probably most common message
-class NewStationMsg(LogMsg):
-    def __init__(self, ipAddr: str, macAddr:str, timestamp: str) -> None:
-        super().__init__()
-        self.ipAddr = ipAddr
-        self.macAddr = macAddr
-        self.timestamp = timestamp
-        self.type = "NewStationMsg"
-
-    # def to_json(self) -> str:
-    #     return f"""
-    #     {{
-    #         "timeStamp": "{self.ts}",
-    #         "ipAddr": "{self.ip_addr}",
-    #         "macAddr": "{self.mac_addr}"
-    #     }}
-    #     """
-
-class ChangedEthernetMsg(LogMsg):
-    def __init__(self, ipAddr: str, macAddr: str, oldMacAddr: str, timestamp: str) -> None:
-        super().__init__()
-        self.ip_addr = ipAddr
-        self.mac_addr = macAddr
-        self.old_mac_addr = oldMacAddr
-        self.ts = timestamp
-        self.type = "ChangedStationMsg"
-
-    def to_json(self) -> str:
-            return f"""
-        {{
-            "timestamp": "{self.ts}",
-            "ipAddr": "{self.ip_addr}",
-            "macAddr": "{self.mac_addr}",
-            "oldMacAddr": "{self.old_mac_addr}"
-        }}
-        """
-
-class NewActivityMsg(LogMsg):
-    def __init__(self, ipAddr: str, macAddr:str, timestamp: str) -> None:
-        super().__init__()
-        self.ip_addr = ipAddr
-        self.mac_addr = macAddr
-        self.ts = timestamp
-        self.type = "NewStationMsg"
-
-    def to_json(self) -> str:
-        return f"""
-        {{
-            "timeStamp": "{self.ts}",
-            "ipAddr": "{self.ip_addr}",
-            "macAddr": "{self.mac_addr}"
-        }}
-        """
-
-# main in the middle attack possibility
-class FlipFlopMsg(LogMsg):
-    def __init__(self, ipAddr: str, macAddr: str, oldMacAddr: str, timestamp: str) -> None:
-        super().__init__()
-        self.ip_addr = ipAddr
-        self.mac_addr = macAddr
-        self.old_mac_addr = oldMacAddr
-        self.ts = timestamp
-        self.type = "FlipFlop"
-
-    def to_json(self) -> str:
-        return f"""
-        {{
-            "timeStamp": "{self.ts}",
-            "ipAddr": "{self.ip_addr}",
-            "macAddr": "{self.mac_addr}"
-        }}
-        """
-
-# TODO: Add  support for eth broadcast, ip broadcast, bogon (maybe remove), diff ethernet broadcast
-# eth mismatch, reused old ethernet address, suppressed DECnet flip flop
 class GetArpwatchLog(Cmd):
     def run(self) -> list[str]:
         f = open(arpwatch_log)
@@ -182,13 +84,17 @@ class SmtpController:
     def __init__(self) -> None:
         pass
 
+
+
 class ArpwatchController:
     def __init__(self) -> None:
         pass
 
     def kill(self) -> bool:
-        os.system("killall arpmonitor-daemon")
-        return True
+        if os.system("killall arpwatch") == 0:
+            return True
+        else:
+            return False
     def restart(self) -> bool:
         if self.kill():
             if current_conf.cnf.has_section('general'):
@@ -213,41 +119,31 @@ class ArpwatchController:
 
             os.system(f"arpwatch")
             return True
-        
         return False
 
+    def get_log(self) -> list[str]:
+        sl: list[str] = []
+        with open(arpwatch_log) as file:
+            for line in file:
+                if "arpwatch" in line:
+                    sl.append(line)
+
+        return sl
 
 
-def parse_arpwatch_log(ls: list[str]) -> list[LogMsg]:
-    msg_list = []
-    for x in ls:
-        sl = x.split(' ')
-        ts = sl[1]
-        if sl[3] != "arpwatch":
-            continue
+    def get_arp_dat(self) -> list[str]:
+        sl: list[str] = []
+        with open(arp_dat) as file:
+            for line in file:
+                sl.append(line)
 
-        pid = sl[4]
-        match (sl[8]):
-            case "changed":
-                if (sl[9], sl[10]) != ("ethernet", "address"):
-                    continue
-                msg_list.append(ChangedEthernetMsg(sl[11], sl[12], sl[13].strip("()"), ts))
-            case "new":
-                match sl[9]:
-                    case "station":
-                        msg_list.append(NewStationMsg(sl[10], sl[11], ts))
-                    case "activity":
-                        msg_list.append(NewActivityMsg(sl[10], sl[11], ts))
-                    case _:
-                        continue
-            case "flip":
-                if sl[9] == "flop":
-                    msg_list.append(FlipFlopMsg(sl[10], sl[11], sl[12].strip("()"), ts))
-                else:
-                    continue
+        return sl
 
 
-    return msg_list
+
+
+
+
 
 
 def main():
@@ -257,9 +153,9 @@ def main():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.bind((IP, PORT))
     sock.listen(2)
-    sl: list[str] = []
-    ll: list[LogMsg] = []
     MAX_SIZE = 500
+
+
 
     dne_line = "This line doesn't exist"
 
@@ -268,8 +164,7 @@ def main():
     while True:
         s, addr = sock.accept() # 1024 buf size, will see how well this works and if there is data loss.
                                          # may have to figure out how to compress new parts of msg, but fine for now
-        data = s.recv(512)
-
+        data = s.recv(1024)
         
         match data:
             case Cmd.RELOAD_CONF:
@@ -285,26 +180,25 @@ def main():
 
             # I think client side should handle the splitting of log
             case Cmd.GET_ARPWATCH_LOG:
-            #[
-            #   {
-            #       // NewStationMsg
-            #   },
-            #   {
-            #       //Changed StationMsg
-            #   },
-            #    etc you get it
-            #
-            #]
-                pl = parse_arpwatch_log(sl)
-                pl.sort(key=attrgetter('type'))
-                s.send(json.dumps(pl, default=LogMsgDict).encode())
+                res = {}
+                log = ArpwatchController().get_log()
+                st: str = ""
+                for i in log:
+                    st += i
+
+                res['message'] = s
+
             
             # Ignoring this for now, need to figure out where arp.dat is
             case Cmd.GET_ARPWATCH_DAT:
-                pass
+                res = {}
+
+                res['message'] = 'Not available currently'
+                s.send(json.dumps(res).encode())
 
             case Cmd.GET_ARPWATCH_STATUS:
                 s.send(json.dumps(current_conf.cnf.items(section='general')).encode())
+
 
             case Cmd.KILL_ARPWATCH:
                 res = {}
@@ -315,21 +209,15 @@ def main():
                     res['status'] = 'failure'
                     s.send(json.dumps(res).encode())
 
+
+            case 
+
+        
+
         s.close()
-        i = 1
-        while True:
-            temp = read_last_n_lines(arpwatch_log, 5 + i * 2)
-            diff = [item for item in temp if item  not in last_lines]
-            if len(diff) != 5 + i * 2:
-                last_lines = temp
-                temp_sl = [byte.decode() for byte in diff]
-                for x in temp_sl:
-                    sl.append(x)
-                break
 
-            i += 1
+        time.sleep(0.1)
 
-        time.sleep(5.0)
 if not is_daemon():
     daemon = daemonize.Daemonize(app="arpmonitor-daemon", pid=pid_loc, action=main)
     daemon.start()

@@ -25,8 +25,43 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
 #}
-
+<!-- Navigation bar -->
+<ul class="nav nav-tabs" data-tabs="tabs" id="maintabs">
+    <li class="active"><a data-toggle="tab" href="#general">{{ lang._('General') }}</a></li>
+    <li><a data-toggle="" href="#arplog">{{ lang._('Arpwatch Log') }}</a></li>
+    <li><a data-toggle="tab" href="#arpdat">{{ lang._('arp.dat') }}</a></li>
+</ul>
+<div class="tab-content content-box tab-content">
+    <div id="general" class="tab-pane fade in active">
+        <div class="content-box" style="padding-bottom: 1.5em;">
+            {{ partial("layout_partials/base_form",['fields':generalForm,'id':'frm_general_settings'])}}
+            <div class="col-md-12">
+                <hr />
+                <button class="btn btn-primary" id="saveAct" type="button"><b>{{ lang._('Save') }}</b> <i id="saveAct_progress"></i></button>
+                <button class="btn pull-right" id="resetdbAct" type="button"><b>{{ lang._('Reset') }}</b> <i id="resetdbAct_progress" class=""></i></button>
+            </div>
+        </div>
+    </div>
+    <div id="arplog" class="tab-pane fade in">
+      <pre id="listarplog"></pre>
+    </div>
+    <div id="daily" class="tab-pane fade in">
+      <pre id="listdaily"></pre>
+    </div>
+    <div id="monthly" class="tab-pane fade in">
+      <pre id="listmonthly"></pre>
+    </div>
+    <div id="yearly" class="tab-pane fade in">
+      <pre id="listyearly"></pre>
+    </div>
+</div>
 <script>
+
+function update_arpdat() {
+  ajaxCall(url="/api/arpmonitor/daemon/arplog", sendData={}, callback=function(data,status) {
+        $("#listarplog").text(data['response']);
+    });
+}
     $( document ).ready(function() {
         mapDataToFormUI({'frm_GeneralSettings':"/api/arpmonitor/settings/get"}).done(function(data){
             // place actions to run after load, for example update form styles.
@@ -41,6 +76,12 @@ POSSIBILITY OF SUCH DAMAGE.
                 });
             });
         });
+
+	$("#logAct").click(function(){
+	  ajaxGet('/api/arpmonitor/daemon/log', sendData={}, callback=function(data,status) {
+	    // action to run after pulling log file
+	  });
+	});
 
         // use a SimpleActionButton() to call /api/arpmonitor/service/testthisshit
         $("#testAct").SimpleActionButton({
